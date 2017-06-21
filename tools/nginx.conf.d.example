@@ -1,0 +1,26 @@
+server
+{
+    listen       80 default;
+    server_name  nav.test.com;
+    charset utf-8;
+
+    location ~ ^(.*)\/\.git\/ {
+            return 404;
+    }
+
+    location /static {
+        alias /data/www/nav.test.com/latest/static;
+    }
+
+    location /media {
+        alias /data/www/nav.test.com/latest/media;
+    }
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/dev/shm/uwsgi_navigation.sock;
+    }
+
+   access_log /data/logs/nginx/${host}_${server_port}_access.log main;
+}
+

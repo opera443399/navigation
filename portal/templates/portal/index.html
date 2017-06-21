@@ -1,0 +1,48 @@
+{% extends 'portal/base.html' %}
+{% load i18n static %}
+{% block titles %}{% trans 'Portal' %}{% endblock %}
+{% block css4this %}
+    <link href="{% static 'portal/css/main.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content_left %}
+            <div class="col-md-3 sidebar">
+                <div id="tree"></div>
+            </div>
+{% endblock %}
+{% block content_right %}
+            <div class="col-md-9 col-md-offset-3 main">
+                <h2 id="sub_header" class="sub-header">{% trans 'Portal' %}</h2>
+                <!-- Primary panel Start-->
+                <div id="panel_lists" class="panel-group panel-group-primary">
+                <!-- 【下面是一段示例代码，页面加载时将使用 main.js 来自动生成下面的 html code】-->
+                    <!-- panel Start-->
+                    <!--
+                    <div class="panel" id="links_online">
+                        <div class="panel-heading">
+                            <span class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#links_online" href="#collapse_A1">
+                                    <strong id="this_title" class="label label-success label-tag">title1</strong>
+                                </a>
+                            </span>
+                        </div>
+                        <div id="collapse_A1" class="panel-collapse in">
+                            <div class="panel-body placeholders">
+                                <div class="col-xs-4 col-sm-2 placeholder">
+                                    <a class="Portal" target="_blank" href="#">
+                                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="img-item-list img-responsive">
+                                        <h5 class="text-muted">Portal</h5>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                    <!-- End of panel-->
+
+                </div>
+                <!-- End of Primary panel -->
+            </div>
+{% endblock %}
+{% block js4this %}
+    <script src="{% static 'portal/js/main.js' %}"></script>
+{% endblock %}

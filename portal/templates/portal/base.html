@@ -1,0 +1,47 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+    <title>{% block titles %} base template {% endblock %}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'portal/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static 'portal/css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <!-- 自定义的 css -->
+    {% block css4this %}{% endblock %}
+</head>
+<body>
+    <!-- 【顶部菜单-左上角】-->
+    {% include "portal/nav.html" %}
+    <!-- 【正文】-->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 【左侧内容】-->
+            {% block content_left %}{% endblock %}
+
+            <!-- 【右侧内容】-->
+            {% block content_right %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'portal/js/jquery-2.2.0.min.js' %}"></script>
+    <script>window.jQuery || document.write('<script src="{% static 'portal/js/jquery-2.2.0.min.js' %}"><\/script>')</script>
+    <script src="{% static 'portal/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'portal/js/bootstrap-treeview.min.js' %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static 'portal/js/ie10-viewport-bug-workaround.js' %}"></script>
+
+    <!-- 自定义的 js -->
+    {% block js4this %}{% endblock %}
+</body>
+</html>
