@@ -53,7 +53,7 @@ def show_app(request, app_id):
     require: get_links_by_id.
     """
     this_app = Level3App.objects.get(app_id=app_id).app_name
-    app_cat = Level4AppCategory.objects.filter(app__app_id=app_id).order_by('cat_name')
+    app_cat = Level4AppCategory.objects.filter(app__app_id=app_id).order_by('cat_rank')
     tree_view_level4_nodes = {
         'title': this_app,
         "data": []
