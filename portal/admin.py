@@ -35,7 +35,7 @@ class Level2WorkGroupAdmin(admin.ModelAdmin):
     inlines = (Level3Appinline,)
     list_display = ('wg_id', 'wg_name', 'bg')
     list_filter = ['bg']
-    search_fields = ['wg_id', 'wg_name', 'bg']
+    search_fields = ['wg_id', 'wg_name', 'bg__bg_name']
 
 
 class Level4AppCategoryinline(admin.TabularInline):
@@ -54,7 +54,7 @@ class Level3AppAdmin(admin.ModelAdmin):
     ]
     list_display = ('app_id', 'app_name', 'app_ename', 'wg', 'is_enabled')
     list_filter = ['wg', 'is_enabled']
-    search_fields = ['app_id', 'app_name', 'app_ename', 'wg', 'is_enabled']
+    search_fields = ['app_id', 'app_name', 'app_ename', 'wg__wg_name', 'is_enabled']
 
 
 class Level5AppLinkInline(admin.TabularInline):
@@ -69,7 +69,7 @@ class Level4AppCategoryAdmin(admin.ModelAdmin):
     inlines = (Level5AppLinkInline,)
     list_display = ('id', 'cat_name', 'cat_rank', 'app')
     list_filter = ['cat_rank', 'app']
-    search_fields = ['id', 'cat_name', 'cat_rank', 'app']
+    search_fields = ['id', 'cat_name', 'cat_rank', 'app__app_name']
 
 
 @admin.register(Level5AppLink)
@@ -82,4 +82,4 @@ class Level5AppLinkAdmin(admin.ModelAdmin):
     ]
     list_display = ('id', 'link_name', 'link_href', 'link_img', 'link_img_upload', 'cat')
     list_filter = ['cat']
-    search_fields = ['id', 'link_name', 'link_href', 'link_img', 'link_img_upload', 'cat']
+    search_fields = ['id', 'link_name', 'link_href', 'link_img', 'link_img_upload', 'cat__cat_name']
