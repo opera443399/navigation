@@ -1,6 +1,6 @@
 #!/bin/bash
 # 
-# pc @ 20170621
+# pc @ 20170627
 # service control.
 # Notice: on CentOS6, python2.6 is the default option.
 
@@ -45,6 +45,7 @@ function do_init(){
     cp -fv ./init.d.uwsgi /etc/init.d/uwsgi_${appname} && chmod +x /etc/init.d/uwsgi_${appname}
     chkconfig --list |grep uwsgi |grep '3:on' || chkconfig uwsgi_${appname} on
     echo -e "You can try this: \n\tservice uwsgi_${appname} status"
+    echo -e "\nnginx conf.d example: \n\tservice tools/nginx.conf.d.example"
 
     echo '[+] setup default secret_key:'
     create_secret_key
@@ -52,11 +53,12 @@ function do_init(){
 
 function do_require(){
     test -x /usr/local/bin/pip2.7 && exit || echo 'Where is pip2.7 on this host?'
+    #yum -y install sqlite*
     #wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz && tar zxvf Python-2.7.13.tgz
     #cd Python-2.7.13 && ./configure && make && make install
 
-    #wget https://pypi.python.org/packages/source/s/setuptools/setuptools-18.7.zip && unzip /root/setuptools-18.7.zip
-    #cd /root/setuptools-18.7 && /usr/local/bin/python2.7 setup.py install
+    #wget https://pypi.python.org/packages/source/s/setuptools/setuptools-18.7.zip && unzip setuptools-18.7.zip
+    #cd setuptools-18.7 && /usr/local/bin/python2.7 setup.py install
 
     #/usr/local/bin/easy_install-2.7 pip
     #/usr/local/bin/pip2.7 install -r requirements.txt
@@ -113,7 +115,10 @@ function do_cleanup(){
 function usage(){
     cat <<_EOF
 
-USAGE: $0 [as given below]
+USAGE: 
+    $0 init          :     init the env for uwsgi+nginx+django(with requirement as optional)
+    $0 deploy        :     deploy the latest code(update,status,reload,cleanup)
+    [arguments as given below]
 
     collect          :     collectstatic
     cleanup          :     cleanup
