@@ -6,6 +6,7 @@ urlpatterns = [
     #################################### /portal/xxx
     #
     url(r'^$', views.show_index, name='show_index'),
+    url(r'^help$', views.show_help, name='show_help'),
     url(r'^show/app/(?P<app_id>[0-9]+)$', views.show_app, name='show_app'),
     url(r'^show/app/default$', views.show_app_default, name='show_app_default'),
     url(r'^show/tree$', views.show_tree, name='show_tree'),

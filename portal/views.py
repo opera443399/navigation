@@ -18,6 +18,13 @@ def show_index(request):
     return render(request, 'portal/index.html')
 
 
+def show_help(request):
+    """
+    show help.
+    """
+    return render(request, 'portal/help.html')
+
+
 # ================================ /portal/app/id ================================
 def show_app_default(request):
     """

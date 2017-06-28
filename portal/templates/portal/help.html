@@ -1,0 +1,11 @@
+{% extends 'portal/base.html' %}
+{% load i18n static %}
+{% block titles %}{% trans 'Help' %}{% endblock %}
+{% block content_right %}
+            <div class="col-md-8 col-md-offset-2">
+                <h2>{% trans 'Help' %}</h2>
+                <a class="btn" href="{% static 'portal/images/logo.png' %}">
+                    <img src="{% static 'portal/images/logo.png' %}" class="img-thumbnail">
+                </a>
+            </div>
+{% endblock %}

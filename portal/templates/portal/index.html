@@ -4,6 +4,9 @@
 {% block css4this %}
     <link href="{% static 'portal/css/main.css' %}" rel="stylesheet">
 {% endblock %}
+{% block navbar %}
+    {% include "portal/nav.html" %}
+{% endblock %}
 {% block content_left %}
             <div class="col-md-3 sidebar">
                 <div id="tree"></div>
