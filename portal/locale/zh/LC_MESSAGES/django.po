@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-28 11:44+0800\n"
+"POT-Creation-Date: 2017-06-28 13:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,8 +81,13 @@ msgstr "自定义图标"
 msgid "link"
 msgstr "超链接"
 
-#: .\templates\portal\index.html:3 .\templates\portal\index.html:14
-#: .\views.py:27
+#: .\templates\portal\help.html:3 .\templates\portal\help.html:6
+#: .\templates\portal\nav.html:71
+msgid "Help"
+msgstr "帮助"
+
+#: .\templates\portal\index.html:3 .\templates\portal\index.html:17
+#: .\views.py:34
 msgid "Portal"
 msgstr "门户"
 
