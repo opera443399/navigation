@@ -18,9 +18,9 @@ class Level1BizGroupAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_select_related = ()
     inlines = (Level2WorkGroupinline,)
-    list_display = ('bg_id', 'bg_name')
-    list_filter = ['bg_name']
-    search_fields = ['bg_id', 'bg_name']
+    list_display = ('bg_id', 'bg_name', 'bg_rank')
+    list_filter = ['bg_name', 'bg_rank']
+    search_fields = ['bg_id', 'bg_name', 'bg_rank']
 
 
 class Level3Appinline(admin.TabularInline):
@@ -33,8 +33,8 @@ class Level2WorkGroupAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_select_related = ()
     inlines = (Level3Appinline,)
-    list_display = ('wg_id', 'wg_name', 'bg')
-    list_filter = ['bg']
+    list_display = ('wg_id', 'wg_name', 'bg', 'wg_rank', 'added_to_navbar')
+    list_filter = ['bg', 'wg_rank', 'added_to_navbar']
     search_fields = ['wg_id', 'wg_name', 'bg__bg_name']
 
 
@@ -67,9 +67,9 @@ class Level4AppCategoryAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_select_related = ()
     inlines = (Level5AppLinkInline,)
-    list_display = ('id', 'cat_name', 'cat_rank', 'app')
-    list_filter = ['cat_rank', 'app']
-    search_fields = ['id', 'cat_name', 'cat_rank', 'app__app_name']
+    list_display = ('id', 'cat_name', 'app', 'cat_rank')
+    list_filter = ['app', 'cat_rank']
+    search_fields = ['id', 'cat_name', 'app__app_name']
 
 
 @admin.register(Level5AppLink)
