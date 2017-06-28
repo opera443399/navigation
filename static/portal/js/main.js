@@ -1,6 +1,6 @@
 /*
  * main.js
- * pc @ 20170620
+ * pc @ 20170628
  */
 
 /*
@@ -12,28 +12,26 @@ function loadNavTop(json_file){
     $.getJSON(json_file,function(result){
         var content = '';
         $.each(result.data, function(idx_i, item_i){
+            content = ''
+                    + '<!-- navbar_top Start-->'
+                    + '<li class="dropdown">'
+                        + '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' + item_i.text + '<b class="caret"></b></a>'
+                        + '<ul class="dropdown-menu">';
+
             $.each(item_i.nodes, function(idx_j, item_j){
-
-                content = ''
-                        + '<!-- navbar_top Start-->'
-                        + '<li class="dropdown">'
-                            + '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' + item_j.text + '<b class="caret"></b></a>'
-                            + '<ul class="dropdown-menu">';
-
-                $.each(item_j.nodes, function(idx_k, item_k){
-                    content += ''
-                                + '<li><a id="appid" href="' + item_k.href + '">' + item_k.text + '</a></li>';
-                });
-
                 content += ''
-                            + '</ul>'
-                        + '</li>';
-
-                 $("ul#navbar_top").append(content);
+                            + '<li><a id="appid" href="' + item_j.href + '">' + item_j.text + '</a></li>';
             });
+
+            content += ''
+                        + '</ul>'
+                    + '</li>';
+
+             $("ul#navbar_top").append(content);
         });
     });
 }
+
 
 
 /*
@@ -118,7 +116,7 @@ $(document).ready(function(){
     //页面首次加载
 
     //加载顶部菜单
-    loadNavTop('/portal/show/tree');
+    loadNavTop('/portal/show/nav');
 
     //加载左侧的侧边栏 treeview
     loadContentLeftTreeView('/portal/show/tree');

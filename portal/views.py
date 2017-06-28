@@ -73,7 +73,7 @@ def get_apps_by_id(id):
     """
     return json data in list for apps filtered by id.
     """
-    work_groups = Level3App.objects.filter(wg__wg_id=id).filter(is_enabled=True).order_by('app_name')
+    work_groups = Level3App.objects.filter(wg__wg_id=id).filter(is_enabled=True).order_by('app_rank')
     tree_view_level3_nodes = []
     for n in work_groups:
         node = {
@@ -89,7 +89,7 @@ def get_work_groups_by_id(id):
     """
     return json data in list for work groups filtered by id.
     """
-    work_groups = Level2WorkGroup.objects.filter(bg__bg_id=id).order_by('wg_name')
+    work_groups = Level2WorkGroup.objects.filter(bg__bg_id=id).order_by('wg_rank')
     tree_view_level2_nodes = []
     for n in work_groups:
         node = {
@@ -106,10 +106,10 @@ def get_work_groups_by_id(id):
 
 def show_tree(request):
     """
-    return json data for treeview and nav.
+    return json data for treeview.
     require: get_work_groups_by_id, get_apps_by_id.
     """
-    biz_groups = Level1BizGroup.objects.order_by('bg_name')
+    biz_groups = Level1BizGroup.objects.order_by('bg_rank')
     tree_view_level1_nodes = {
         'comment': "",
         "data": []
@@ -125,6 +125,32 @@ def show_tree(request):
         tree_view_level1_nodes['data'].append(node)
 
     return JsonResponse(tree_view_level1_nodes)
+
+
+# ================================ /portal/show/navbar ================================
+def show_nav(request):
+    """
+    return json data for navbar.
+    require: get_apps_by_id.
+    """
+    biz_groups = Level1BizGroup.objects.order_by('bg_rank')
+    nav_bar_level1_nodes = {
+        'comment': "",
+        "data": []
+    }
+    for b in biz_groups:
+        work_groups = Level2WorkGroup.objects.filter(bg__bg_id=b.bg_id).filter(added_to_navbar=True).order_by('wg_rank')
+        for n in work_groups:
+            node = {
+                'text': n.wg_name,
+                'href': '#',
+                'nodes': get_apps_by_id(n.wg_id)
+            }
+            if len(node['nodes']) == 0:
+                continue
+            nav_bar_level1_nodes['data'].append(node)
+
+    return JsonResponse(nav_bar_level1_nodes)
 
 
 # ================================ set default data for exp ================================
