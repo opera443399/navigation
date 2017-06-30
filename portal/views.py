@@ -167,6 +167,7 @@ def set_default_app_cat_and_link(request):
     """
     apps = Level3App.objects.filter(is_enabled=True).order_by('app_name')
 
+    context = {}
     for app in apps:
         count_error = 0
         try:
@@ -174,7 +175,8 @@ def set_default_app_cat_and_link(request):
                     cat_name='default({0})'.format(app.app_name),
                     app=app
             )
-            print('cat={0}, status={1}'.format(cat.cat_name, status))
+            #print('cat={0}, status={1}'.format(cat.cat_name, status))
+            context['cat={0}'.format(cat.cat_name)] = 'status={0}'.format(status)
 
             href = 'http://nav.test.com/test?app={0}_{1}'.format(app.app_ename, app.app_id)
             (link, status) = Level5AppLink.objects.get_or_create(
@@ -182,12 +184,14 @@ def set_default_app_cat_and_link(request):
                     link_href=href,
                     cat=cat
             )
-            print('link={0}, status={1}'.format(link.link_name, status))
+            #print('link={0}, status={1}'.format(link.link_name, status))
+            context['link={0}'.format(link.link_name)] = 'status={0}'.format(status)
 
         except Exception as e:
             print('[error]: {0}'.format(e))
             count_error += 1
             continue
         print('[count_error]: {0}'.format(count_error))
+        context['count_error'] = count_error
 
-    return JsonResponse({'msg': 'OK'})
+    return JsonResponse(context)
