@@ -38,6 +38,16 @@ function update_django_settings(){
 
 }
 
+function do_debug(){
+    echo '[+++] DEBUG on.'
+    sed -i -e 's#db.sqlite3#debug.sqlite3#' \
+    's/DEBUG = False/DEBUG = True/'  ${d_link}/${appname}/settings.py
+    cd ${d_link}
+    do_ctl_uwsgi stop
+    cp -a ${f_sqlite_src} debug.sqlite3
+    ${py27} manage.py runserver 0.0.0.0:8000
+}
+
 function do_init(){
     echo '[+] setup uwsgi:'
     cd $(dirname $0)
@@ -78,15 +88,9 @@ function do_test(){
     ${py27} manage.py test
 }
 
-function do_reload(){
-    echo '[+] do reload'
-    chown www:www -R -L "${d_link}"
-    service uwsgi_${appname} reload
-}
-
-function do_status(){
-    echo '[+] status'
-    service uwsgi_${appname} status
+function do_ctl_uwsgi(){
+    echo "[+] do $1"
+    service uwsgi_${appname} $1
 }
 
 function do_update(){
@@ -125,6 +129,8 @@ USAGE:
     deploy           :     deploy from src to target
     init             :     init uwsgi
     reload           :     reload uwsgi
+    restart          :     restart uwsgi
+    stop             :     stop uwsgi
     status           :     status uwsgi
     test             :     test
     update           :     update code from src to target
@@ -137,6 +143,7 @@ USAGE:
     d_root           :     ${d_root}
     d_link           :     ${d_link}
 
+    debug            :     debug on
 _EOF
 }
 
@@ -145,13 +152,16 @@ case $1 in
         do_update
         #do_collect
         #do_test
-        do_status
-        do_reload
-        do_status
+        do_ctl_uwsgi status
+        do_ctl_uwsgi reload
+        do_ctl_uwsgi status
         do_cleanup
         ;;
-    collect|cleanup|init|reload|require|status|test)
+    collect|cleanup|init|require|test|debug)
         do_$1
+        ;;
+    reload|restart|stop|status)
+        do_ctl_uwsgi $1
         ;;
     create_key)
         create_secret_key
