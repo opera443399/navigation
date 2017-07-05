@@ -1,6 +1,6 @@
 #!/bin/bash
 # 
-# pc @ 20170627
+# pc @ 20170705
 # service control.
 # Notice: on CentOS6, python2.6 is the default option.
 
@@ -48,14 +48,19 @@ function do_debug(){
     ${py27} manage.py runserver 0.0.0.0:8000
 }
 
-function do_init(){
+function do_update_uwsgi(){
     echo '[+] setup uwsgi:'
     cd $(dirname $0)
     cp -fv ./uwsgi.ini /etc/uwsgi_${appname}.ini
     cp -fv ./init.d.uwsgi /etc/init.d/uwsgi_${appname} && chmod +x /etc/init.d/uwsgi_${appname}
     chkconfig --list |grep uwsgi |grep '3:on' || chkconfig uwsgi_${appname} on
     echo -e "You can try this: \n\tservice uwsgi_${appname} status"
-    echo -e "\nnginx conf.d example: \n\tservice tools/nginx.conf.d.example"
+}
+
+function do_init(){
+    do_update_uwsgi
+
+    echo -e "\nnginx conf.d example: \n\t tools/nginx.conf.d.example"
 
     echo '[+] setup default secret_key:'
     create_secret_key
@@ -137,6 +142,7 @@ USAGE:
 
     create_key       :     create secret_key
     update_setting   :     update django settings
+    update_uwsgi     :     update uwsgi service control script and configuration
 
     require          :     python2.7, pip2.7, requirements.txt, uwsgi
     d_src            :     ${d_src}
@@ -168,6 +174,9 @@ case $1 in
         ;;
     update_setting)
         update_django_settings
+        ;;
+    update_uwsgi)
+        do_update_uwsgi
         ;;
     *)
         usage
