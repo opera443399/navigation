@@ -74,7 +74,7 @@ class Level4AppCategory(models.Model):
 @python_2_unicode_compatible
 class Level5AppLink(models.Model):
     link_name = models.CharField(_('name'), max_length=50, unique=True, default='DEFAULT')
-    link_href = models.CharField(_('href'), max_length=200, default='#')
+    link_href = models.CharField(_('href'), max_length=500, default='#')
     link_img = models.CharField(_('icon'), max_length=50, choices=CHOICES_ICONS, default='icons/default.svg')
     link_img_upload = models.ImageField(_('custom icon'), upload_to='icons', default='', blank=True)
     cat = models.ForeignKey(Level4AppCategory, default='1', on_delete=models.CASCADE, verbose_name=_('category'))
