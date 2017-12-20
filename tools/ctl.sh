@@ -1,6 +1,6 @@
 #!/bin/bash
-# 
-# pc @ 20170705
+#
+# pc @ 20171220
 # service control.
 # Notice: on CentOS6, python2.6 is the default option.
 
@@ -41,10 +41,10 @@ function update_django_settings(){
 function do_debug(){
     echo '[+++] DEBUG on.'
     sed -i -e 's#db.sqlite3#debug.sqlite3#' \
-    's/DEBUG = False/DEBUG = True/'  ${d_link}/${appname}/settings.py
+    -e 's#DEBUG = False#DEBUG = True#'  ${d_link}/${appname}/settings.py
     cd ${d_link}
     do_ctl_uwsgi stop
-    cp -a ${f_sqlite_src} debug.sqlite3
+    cp -av ${f_sqlite_src} debug.sqlite3
     ${py27} manage.py runserver 0.0.0.0:8000
 }
 
@@ -124,9 +124,11 @@ function do_cleanup(){
 function usage(){
     cat <<_EOF
 
-USAGE: 
+USAGE:
     $0 init          :     init the env for uwsgi+nginx+django(with requirement as optional)
     $0 deploy        :     deploy the latest code(update,status,reload,cleanup)
+
+    DON'T FORGET YOUR DB!
     [arguments as given below]
 
     collect          :     collectstatic
@@ -138,13 +140,12 @@ USAGE:
     stop             :     stop uwsgi
     status           :     status uwsgi
     test             :     test
-    update           :     update code from src to target
 
     create_key       :     create secret_key
     update_setting   :     update django settings
     update_uwsgi     :     update uwsgi service control script and configuration
 
-    require          :     python2.7, pip2.7, requirements.txt, uwsgi
+    require          :     python2.7, pip2.7, requirements.txt, uwsgi(pthon-devel), db
     d_src            :     ${d_src}
     d_root           :     ${d_root}
     d_link           :     ${d_link}
@@ -182,6 +183,3 @@ case $1 in
         usage
         ;;
 esac
-
-
-
